@@ -1,12 +1,14 @@
 package org.example
 
-import org.junit.Assert.assertTrue
-import org.junit.Rule
-import org.junit.Test
-import org.junit.rules.TemporaryFolder
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.io.TempDir
 import java.io.*
+import java.nio.file.Files
+import java.nio.file.Path
 import kotlin.test.assertContains
-
 
 class MainMenuTest {
 
@@ -17,9 +19,10 @@ class MainMenuTest {
     private var inputStream = PrintStream(pos)
     private var outputStream = ByteArrayOutputStream()
 
-    @get:Rule
-    val folder = TemporaryFolder()
+    @TempDir
+    lateinit var folderPath: Path
 
+    @BeforeEach
     private fun setup(){
         pos = PipedOutputStream()
         pis = PipedInputStream(pos)
@@ -29,6 +32,7 @@ class MainMenuTest {
         System.setOut(PrintStream(outputStream))
     }
 
+    @AfterEach
     private fun cleanup() {
         System.setOut(sysout)
         System.setIn(sysin)
@@ -36,48 +40,41 @@ class MainMenuTest {
 
     @Test
     fun testGetUserChoices_CorrectActionAndFile() {
-        setup()
         val mainMenu = MainMenu()
         val actionChoice = ActionChoice.values().size
-        val file = folder.newFile("file.test").absolutePath
+        val file = Files.createFile(folderPath.resolve("file.test")).toAbsolutePath()
         inputStream.println(actionChoice)
         inputStream.println(file)
         inputStream.close()
         val userChoices :MainMenu.UserChoices = mainMenu.getUserChoices()
         assertContains(ActionChoice.values(), userChoices.action)
-        assertTrue(userChoices.file.exists())
-        assertTrue(userChoices.file.isFile)
-        cleanup()
+        Assertions.assertTrue(userChoices.file.exists())
+        Assertions.assertTrue(userChoices.file.isFile)
     }
 
     @Test
     fun testGetUserChoices_WrongAction() {
-        setup()
         val wrongAction = ActionChoice.values().size+1
         inputStream.println(wrongAction)
         inputStream.close()
         try {
             MainMenu().getUserChoices()
         } catch (e: java.util.NoSuchElementException) {
-            assertTrue(outputStream.toString().contains(MainMenu.Errors.badActionChoice))
+            Assertions.assertTrue(outputStream.toString().contains(MainMenu.badActionChoice))
         }
-        cleanup()
-
     }
 
     @Test
     fun testGetUserChoices_WrongFile() {
-        setup()
         val actionChoice = ActionChoice.values().size
         inputStream.println(actionChoice)
-        inputStream.println(File(folder.root, "nothing.test").absolutePath)
+        inputStream.println(folderPath.resolve("nothing.test").toAbsolutePath())
         inputStream.close()
         try {
             MainMenu().getUserChoices()
         } catch (e: java.util.NoSuchElementException) {
-            assertTrue(outputStream.toString().contains(MainMenu.Errors.badSourceFile))
+            Assertions.assertTrue(outputStream.toString().contains(MainMenu.badSourceFile))
         }
-        cleanup()
     }
 
 }
