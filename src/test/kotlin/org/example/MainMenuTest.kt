@@ -1,15 +1,14 @@
 package org.example
 
-import junit.framework.TestCase
+import org.junit.Assert.assertTrue
+import org.junit.Rule
 import org.junit.Test
-import java.io.ByteArrayOutputStream
-import java.io.PipedInputStream
-import java.io.PipedOutputStream
-import java.io.PrintStream
+import org.junit.rules.TemporaryFolder
+import java.io.*
 import kotlin.test.assertContains
 
 
-class MainMenuTest : TestCase(){
+class MainMenuTest {
 
     private val sysin = System.`in`
     private val sysout = System.out
@@ -17,6 +16,9 @@ class MainMenuTest : TestCase(){
     private var pis = PipedInputStream(pos)
     private var inputStream = PrintStream(pos)
     private var outputStream = ByteArrayOutputStream()
+
+    @get:Rule
+    val folder = TemporaryFolder()
 
     private fun setup(){
         pos = PipedOutputStream()
@@ -36,10 +38,11 @@ class MainMenuTest : TestCase(){
     fun testGetUserChoices_CorrectActionAndFile() {
         setup()
         val mainMenu = MainMenu()
-        val actionChoice = "1"
-        val file = "C:\\Users\\argam\\IdeaProjects\\encryptor\\src\\main\\kotlin\\org\\example\\test"
+        val actionChoice = ActionChoice.values().size
+        val file = folder.newFile("file.test").absolutePath
         inputStream.println(actionChoice)
         inputStream.println(file)
+        inputStream.close()
         val userChoices :MainMenu.UserChoices = mainMenu.getUserChoices()
         assertContains(ActionChoice.values(), userChoices.action)
         assertTrue(userChoices.file.exists())
@@ -50,7 +53,7 @@ class MainMenuTest : TestCase(){
     @Test
     fun testGetUserChoices_WrongAction() {
         setup()
-        val wrongAction = "0"
+        val wrongAction = ActionChoice.values().size+1
         inputStream.println(wrongAction)
         inputStream.close()
         try {
@@ -65,10 +68,9 @@ class MainMenuTest : TestCase(){
     @Test
     fun testGetUserChoices_WrongFile() {
         setup()
-        val actionChoice = "1"
-        val file = "none"
+        val actionChoice = ActionChoice.values().size
         inputStream.println(actionChoice)
-        inputStream.println(file)
+        inputStream.println(File(folder.root, "nothing.test").absolutePath)
         inputStream.close()
         try {
             MainMenu().getUserChoices()
