@@ -10,6 +10,8 @@ class MainMenu {
         const val badSourceFile = "ERROR: the source file specified doesn't exist."
     }
 
+    enum class ActionChoice { Encryption, Decryption }
+
     data class UserChoices (
         val action: ActionChoice,
         val file: File
