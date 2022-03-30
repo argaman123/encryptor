@@ -1,14 +1,13 @@
-package org.example.Algorithms
+package org.example.algorithms
 
-import org.example.Algorithm
 import java.io.File
 
-class Simulation : Algorithm() {
+class SimulationAlgorithm : Algorithm() {
     override fun encrypt(file: File) {
-        TODO("Not yet implemented")
+        println("encryption simulation of file ${file.name}")
     }
 
     override fun decrypt(file: File) {
-        TODO("Not yet implemented")
+        println("decryption simulation of file ${file.name}")
     }
 }

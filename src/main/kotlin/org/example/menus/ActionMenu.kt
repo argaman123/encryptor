@@ -1,4 +1,7 @@
 package org.example.menus
 
-class actionChoiceMenu {
+class ActionMenu : NumberChoiceMenu<ActionMenu.ActionChoice>(
+    ActionChoice.values()
+) {
+    enum class ActionChoice { Encryption, Decryption }
 }

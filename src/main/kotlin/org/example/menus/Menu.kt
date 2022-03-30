@@ -1,4 +1,8 @@
-package org.example
+package org.example.menus
 
-class Menu {
+import java.util.*
+
+abstract class Menu <T> {
+    protected val input = Scanner(System.`in`)
+    abstract fun run() :T
 }

@@ -1,4 +1,4 @@
-package org.example
+package org.example.utils
 
 import java.io.*
 
@@ -15,8 +15,10 @@ class SystemIOMock {
         sysout.println(text)
     }
 
-    fun inputLine(text: Any){
+    fun inputLine(text: Any) :SystemIOMock{
         inputStream.println(text)
+        //log("INPUT: $text")
+        return this
     }
 
     fun stopInput(){
@@ -25,12 +27,14 @@ class SystemIOMock {
 
     fun consumeOutput() :String{
         val output = outputStream.toString()
+        //log("OUTPUT: $output")
         outputStream.reset()
         return output
     }
 
     fun enable(input: Boolean = true, output: Boolean = true){
         if (output) {
+            consumeOutput()
             System.setOut(PrintStream(outputStream))
         }
         if (input) {
