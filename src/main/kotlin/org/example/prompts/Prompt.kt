@@ -1,8 +1,8 @@
-package org.example.menus
+package org.example.prompts
 
 import java.util.*
 
-abstract class Menu <T> {
+abstract class Prompt <T> {
     protected val input = Scanner(System.`in`)
     abstract fun run() :T
 }

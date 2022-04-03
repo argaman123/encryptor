@@ -1,5 +1,8 @@
-package org.example.menus
+package org.example.algorithm.caesar
 
+import org.example.algorithm.caesar.CaesarPrompt
+import org.example.algorithm.key.Key
+import org.example.prompts.ActionMenuPrompt
 import org.example.utils.SystemIOMock
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.Test
@@ -8,7 +11,7 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 
-internal class NumberChoiceMenuTest {
+internal class CaesarPromptTest {
 
     companion object {
         private var systemIOMock = SystemIOMock()
@@ -30,32 +33,30 @@ internal class NumberChoiceMenuTest {
         systemIOMock.enable()
     }
 
-    private enum class TestChoice {
-        ChoiceOne, ChoiceTwo
-    }
-
-    private val testChoices = TestChoice.values()
-
     @Test
-    fun runValidChoice() {
-        val actionChoice = testChoices.size
+    fun run() {
+        val caesarPrompt = CaesarPrompt(ActionMenuPrompt.ActionChoice.Decryption)
+        val key = Byte.MIN_VALUE
         systemIOMock
-            .inputLine(actionChoice)
+            .inputLine(key)
             .stopInput()
-        val action = NumberChoiceMenu(testChoices).run()
-        assertTrue(action in testChoices)
+        val algorithm = caesarPrompt.run() as CaesarAlgorithm.Decryption
+        assertTrue(algorithm.key.byte == key)
     }
 
     @Test
-    fun runInvalidChoice() {
-        val wrongAction = testChoices.size+1
+    fun runIllegalKey() {
+        val caesarPrompt = CaesarPrompt(ActionMenuPrompt.ActionChoice.Decryption)
+        val key = Byte.MAX_VALUE + 1
         systemIOMock
-            .inputLine(wrongAction)
+            .inputLine(key)
             .stopInput()
         try {
-            NumberChoiceMenu(testChoices).run()
+            caesarPrompt.run()
         } catch (e: java.util.NoSuchElementException) {
-            assertTrue(systemIOMock.consumeOutput().contains(NumberChoiceMenu.Errors.invalidChoice))
+            assertTrue(systemIOMock.consumeOutput().contains(Key.Illegal().message.toString()))
         }
     }
+
+
 }

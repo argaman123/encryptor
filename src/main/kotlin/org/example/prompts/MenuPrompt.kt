@@ -1,8 +1,8 @@
-package org.example.menus
+package org.example.prompts
 
-open class NumberChoiceMenu<T>(
+open class MenuPrompt<T>(
     private val choices: Array<T>,
-) : Menu<T>() {
+) : Prompt<T>() {
 
     companion object Errors {
         const val invalidChoice = "ERROR: choice isn't available."

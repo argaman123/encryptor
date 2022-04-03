@@ -1,6 +1,6 @@
-package org.example.menus
+package org.example.prompts
 
-import org.example.menus.SourceFileMenu.Errors
+import org.example.prompts.SourceFilePrompt.BadSourceFile
 import org.example.utils.SystemIOMock
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.*
@@ -8,7 +8,7 @@ import org.junit.jupiter.api.io.TempDir
 import java.nio.file.Files
 import java.nio.file.Path
 
-internal class SourceFileMenuTest {
+internal class SourceFilePromptTest {
 
     companion object {
         private var systemIOMock = SystemIOMock()
@@ -39,7 +39,7 @@ internal class SourceFileMenuTest {
         systemIOMock
             .inputLine(fileChoice.toAbsolutePath())
             .stopInput()
-        val file = SourceFileMenu().run()
+        val file = SourceFilePrompt().run()
         assertTrue(file.absolutePath == fileChoice.toAbsolutePath().toString())
         assertTrue(file.exists())
         assertTrue(file.isFile)
@@ -51,9 +51,9 @@ internal class SourceFileMenuTest {
             .inputLine(folderPath.resolve("nothing.test").toAbsolutePath())
             .stopInput()
         try {
-            SourceFileMenu().run()
+            SourceFilePrompt().run()
         } catch (e: java.util.NoSuchElementException) {
-            assertTrue(systemIOMock.consumeOutput().contains(Errors.badSourceFile))
+            assertTrue(systemIOMock.consumeOutput().contains(BadSourceFile().message!!))
         }
     }
 }
