@@ -20,13 +20,13 @@ abstract class EncryptionMethod<K: Key>(k: K) : AlgorithmMethod<K>(k){
     init {
         println("KEY: $k")
     }
-    override fun save(original: File, bytes: ByteArray){
+    final override fun save(original: File, bytes: ByteArray){
         File(original.absolutePath + ".encrypted").writeBytes(bytes)
     }
 }
 
 abstract class DecryptionMethod<K: Key>(k: K) : AlgorithmMethod<K>(k){
-    override fun save(original: File, bytes: ByteArray){
+    final override fun save(original: File, bytes: ByteArray){
         val originalFilePath = original.absolutePath.removeSuffix(".encrypted")
         val lastDot = originalFilePath.lastIndexOf(".")
         val originalFileName = originalFilePath.substring(0, lastDot)

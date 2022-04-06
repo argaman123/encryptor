@@ -3,7 +3,6 @@ package org.example.algorithm.multiplication
 import org.example.algorithm.DecryptionMethod
 import org.example.algorithm.EncryptionMethod
 import org.example.algorithm.key.ByteKey
-import java.io.File
 import kotlin.random.Random
 
 class MultiplicationAlgorithm {
@@ -28,18 +27,18 @@ class MultiplicationAlgorithm {
     }
 
     private companion object {
-        fun MWOConvert(index: Int, byte: Byte, key: Byte) :Byte = (byte * key).toByte()
+        fun MWOConvert(byte: Byte, key: Byte) :Byte = (byte * key).toByte()
     }
 
     class Encryption(key: Key = Key()) : EncryptionMethod<Key>(key) {
-        override fun apply(index: Int, byte: Byte) = MWOConvert(index, byte, key.byte)
+        override fun apply(index: Int, byte: Byte) = MWOConvert(byte, key.byte)
     }
 
     class Decryption(key: Key) : DecryptionMethod<Key>(key) {
         private val decryptionKey = (Byte.MIN_VALUE..Byte.MAX_VALUE).first {
             (it.toByte() * key.byte).toByte() == 1.toByte()
         }.toByte()
-        override fun apply(index: Int, byte: Byte) = MWOConvert(index, byte, decryptionKey)
+        override fun apply(index: Int, byte: Byte) = MWOConvert(byte, decryptionKey)
     }
 
 }
