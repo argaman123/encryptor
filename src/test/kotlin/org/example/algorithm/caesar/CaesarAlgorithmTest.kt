@@ -1,7 +1,7 @@
 package org.example.algorithm.caesar
 
 import org.example.algorithm.caesar.CaesarAlgorithm
-import org.example.algorithm.key.ByteKey
+import org.example.algorithm.ByteKey
 import org.example.utils.SystemIOMock
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.*

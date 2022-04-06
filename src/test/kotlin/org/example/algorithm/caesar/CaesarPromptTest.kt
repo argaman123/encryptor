@@ -1,7 +1,7 @@
 package org.example.algorithm.caesar
 
 import org.example.algorithm.caesar.CaesarPrompt
-import org.example.algorithm.key.Key
+import org.example.algorithm.Key
 import org.example.prompts.ActionMenuPrompt
 import org.example.utils.SystemIOMock
 import org.junit.jupiter.api.AfterAll

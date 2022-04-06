@@ -2,7 +2,7 @@ package org.example.algorithm.double
 
 import org.example.algorithm.DecryptionMethod
 import org.example.algorithm.EncryptionMethod
-import org.example.algorithm.key.Key as KeyClass
+import org.example.algorithm.Key as KeyClass
 
 class DoubleAlgorithm {
 

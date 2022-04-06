@@ -3,7 +3,7 @@ package org.example.algorithm.split
 import org.example.algorithm.*
 import org.example.algorithm.double.DoubleAlgorithm
 import org.example.prompts.ActionMenuPrompt.ActionChoice
-import org.example.algorithm.key.Key
+import org.example.algorithm.Key
 
 class SplitPrompt(actionChoice: ActionChoice? = null) : AlgorithmSetupPrompt(actionChoice){
     override fun run(): AlgorithmMethod<SplitAlgorithm.Key> {

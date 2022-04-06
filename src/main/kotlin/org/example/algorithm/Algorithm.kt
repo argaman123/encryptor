@@ -1,18 +1,20 @@
 package org.example.algorithm
 
-import org.example.algorithm.key.Key
+import org.example.algorithm.Key
 import java.io.File
 
-
-abstract class AlgorithmMethod<K: Key>(var key: K) {
+abstract class AlgorithmMethod<K: Key>(var key: K) : AlgorithmObservable() {
     abstract fun apply(index: Int, byte: Byte): Byte
-    abstract fun save(original: File, bytes: ByteArray)
+    abstract fun getOutputFile(original: File): File
+    private fun save(original: File, bytes: ByteArray) = getOutputFile(original).writeBytes(bytes)
     fun apply(file: File){
+        notifyObservers(AlgorithmEvent.Started)
         val bytes = file.readBytes()
         bytes.forEachIndexed {i, byte ->
             bytes[i] = apply(i, byte)
         }
         save(file, bytes)
+        notifyObservers(AlgorithmEvent.Finished)
     }
 }
 
@@ -20,18 +22,17 @@ abstract class EncryptionMethod<K: Key>(k: K) : AlgorithmMethod<K>(k){
     init {
         println("KEY: $k")
     }
-    final override fun save(original: File, bytes: ByteArray){
-        File(original.absolutePath + ".encrypted").writeBytes(bytes)
-    }
+
+    final override fun getOutputFile(original: File) = File(original.absolutePath + ".encrypted")
 }
 
 abstract class DecryptionMethod<K: Key>(k: K) : AlgorithmMethod<K>(k){
-    final override fun save(original: File, bytes: ByteArray){
+    final override fun getOutputFile(original: File): File {
         val originalFilePath = original.absolutePath.removeSuffix(".encrypted")
         val lastDot = originalFilePath.lastIndexOf(".")
         val originalFileName = originalFilePath.substring(0, lastDot)
         val originalFileExtension = originalFilePath.substring(lastDot)
-        File("${originalFileName}_decrypted$originalFileExtension").writeBytes(bytes)
+        return File("${originalFileName}_decrypted$originalFileExtension")
     }
 }
 

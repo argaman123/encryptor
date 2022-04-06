@@ -2,7 +2,7 @@ package org.example.algorithm.reverse
 
 import org.example.algorithm.DecryptionMethod
 import org.example.algorithm.EncryptionMethod
-import org.example.algorithm.key.Key
+import org.example.algorithm.Key
 
 class ReverseAlgorithm {
 

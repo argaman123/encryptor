@@ -2,9 +2,8 @@ package org.example.algorithm.double
 
 import org.example.algorithm.*
 import org.example.prompts.ActionMenuPrompt.ActionChoice
-import org.example.algorithm.key.ByteKey
-import org.example.algorithm.key.Key
-import org.example.prompts.RepeatedInputPrompt
+import org.example.algorithm.ByteKey
+import org.example.algorithm.Key
 
 class DoublePrompt(actionChoice: ActionChoice? = null) : AlgorithmSetupPrompt(actionChoice){
     override fun run(): AlgorithmMethod<DoubleAlgorithm.Key> {

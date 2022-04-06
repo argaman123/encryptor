@@ -1,4 +1,4 @@
-package org.example.algorithm.key
+package org.example.algorithm
 
 import kotlin.random.Random
 

@@ -2,7 +2,7 @@ package org.example.algorithm.xor
 
 import org.example.algorithm.DecryptionMethod
 import org.example.algorithm.EncryptionMethod
-import org.example.algorithm.key.ByteKey
+import org.example.algorithm.ByteKey
 import kotlin.experimental.xor
 
 class XORAlgorithm {

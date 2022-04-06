@@ -2,7 +2,7 @@ package org.example.algorithm.multiplication
 
 import org.example.algorithm.DecryptionMethod
 import org.example.algorithm.EncryptionMethod
-import org.example.algorithm.key.ByteKey
+import org.example.algorithm.ByteKey
 import kotlin.random.Random
 
 class MultiplicationAlgorithm {

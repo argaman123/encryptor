@@ -2,7 +2,7 @@ package org.example.algorithm.reverse
 
 import org.example.algorithm.*
 import org.example.prompts.ActionMenuPrompt.ActionChoice
-import org.example.algorithm.key.Key
+import org.example.algorithm.Key
 
 class ReversePrompt(actionChoice: ActionChoice? = null) : AlgorithmSetupPrompt(actionChoice){
     override fun run(): AlgorithmMethod<Key> {
