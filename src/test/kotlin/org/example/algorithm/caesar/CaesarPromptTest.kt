@@ -1,7 +1,7 @@
 package org.example.algorithm.caesar
 
+import org.example.algorithm.AlgorithmKey
 import org.example.algorithm.caesar.CaesarPrompt
-import org.example.algorithm.Key
 import org.example.prompts.ActionMenuPrompt
 import org.example.utils.SystemIOMock
 import org.junit.jupiter.api.AfterAll
@@ -54,7 +54,7 @@ internal class CaesarPromptTest {
         try {
             caesarPrompt.run()
         } catch (e: java.util.NoSuchElementException) {
-            assertTrue(systemIOMock.consumeOutput().contains(Key.Illegal().message.toString()))
+            assertTrue(systemIOMock.consumeOutput().contains(AlgorithmKey.Illegal().message.toString()))
         }
     }
 

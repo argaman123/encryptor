@@ -1,6 +1,5 @@
 package org.example.algorithm
 
-import org.example.algorithm.Key
 import org.example.prompts.ActionMenuPrompt
 import org.example.prompts.ActionMenuPrompt.ActionChoice
 import org.example.prompts.Prompt
@@ -9,11 +8,11 @@ import java.io.File
 
 abstract class AlgorithmSetupPrompt (
     actionChoice: ActionChoice? = null
-) : Prompt<AlgorithmMethod<out Key>>() {
+) : Prompt<AlgorithmMethod<out AlgorithmKey>>() {
 
     val actionChoice = actionChoice ?: ActionMenuPrompt().run()
 
-    fun execute(file: File = SourceFilePrompt().run()) : AlgorithmMethod<out Key> {
+    fun execute(file: File = SourceFilePrompt().run()) : AlgorithmMethod<out AlgorithmKey> {
         var finalFile = file
         run().let {
             while (it.getOutputFile(finalFile).exists()){

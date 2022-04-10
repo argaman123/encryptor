@@ -1,7 +1,5 @@
 package org.example.prompts
 
-import java.lang.Exception
-
 open class RepeatedInputPrompt<T>(
     message: String,
     private vararg val allowedExceptions: Exception,
@@ -12,7 +10,7 @@ open class RepeatedInputPrompt<T>(
             try {
                 return super.run()
             } catch (e: Exception) {
-                if (allowedExceptions.any { exp -> e::class == exp::class }){
+                if (allowedExceptions.any { e::class == it::class }){
                     println("ERROR: ${e.message}")
                 }
                 else

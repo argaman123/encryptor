@@ -1,13 +1,28 @@
 package org.example.algorithm
 
-import org.example.algorithm.Key
 import java.io.File
+import java.io.FileOutputStream
+import java.io.ObjectOutputStream
+import java.io.Serializable
 
-abstract class AlgorithmMethod<K: Key>(var key: K) : AlgorithmObservable() {
+abstract class AlgorithmKey(val name: String): Serializable {
+    class Illegal : java.lang.Exception("Key is invalid.")
+    abstract fun encryption(): EncryptionMethod<out AlgorithmKey>
+    abstract fun decryption(): DecryptionMethod<out AlgorithmKey>
+}
+
+abstract class ByteKey(
+    val byte: Byte,
+    name: String
+) : AlgorithmKey(
+    name
+)
+
+abstract class AlgorithmMethod<K: AlgorithmKey>(var key: K) : AlgorithmObservable() {
     abstract fun apply(index: Int, byte: Byte): Byte
     abstract fun getOutputFile(original: File): File
     private fun save(original: File, bytes: ByteArray) = getOutputFile(original).writeBytes(bytes)
-    fun apply(file: File){
+    open fun apply(file: File){
         notifyObservers(AlgorithmEvent.Started)
         val bytes = file.readBytes()
         bytes.forEachIndexed {i, byte ->
@@ -18,15 +33,28 @@ abstract class AlgorithmMethod<K: Key>(var key: K) : AlgorithmObservable() {
     }
 }
 
-abstract class EncryptionMethod<K: Key>(k: K) : AlgorithmMethod<K>(k){
-    init {
-        println("KEY: $k")
+abstract class EncryptionMethod<K: AlgorithmKey>(k: K) : AlgorithmMethod<K>(k){
+
+    override fun apply(file: File) {
+        /*var out = File(file.parent + "/${key.name}-key.bin")
+        var i = 1
+        while(out.exists()){
+            out = File(file.parent + "/${key.name}-key$i.bin")
+            i++
+        }*/
+        println("KEY: $key")
+        val f = FileOutputStream(File(file.parent + "/key.bin"))
+        val o = ObjectOutputStream(f)
+        o.writeObject(key)
+        o.close()
+        f.close()
+        super.apply(file)
     }
 
     final override fun getOutputFile(original: File) = File(original.absolutePath + ".encrypted")
 }
 
-abstract class DecryptionMethod<K: Key>(k: K) : AlgorithmMethod<K>(k){
+abstract class DecryptionMethod<K: AlgorithmKey>(k: K) : AlgorithmMethod<K>(k){
     final override fun getOutputFile(original: File): File {
         val originalFilePath = original.absolutePath.removeSuffix(".encrypted")
         val lastDot = originalFilePath.lastIndexOf(".")

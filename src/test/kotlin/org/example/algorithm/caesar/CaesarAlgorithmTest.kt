@@ -1,11 +1,8 @@
 package org.example.algorithm.caesar
 
-import org.example.algorithm.caesar.CaesarAlgorithm
-import org.example.algorithm.ByteKey
 import org.example.utils.SystemIOMock
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.io.TempDir
 import java.nio.file.Files
 import java.nio.file.Path
@@ -51,7 +48,7 @@ internal class CaesarAlgorithmTest {
         val file = Files.createFile(folderPath.resolve("decrypt.test")).toFile()
         file.writeText(encryptedText)
         val key: Byte = 15
-        CaesarAlgorithm.Decryption(ByteKey(key)).apply(file)
+        CaesarAlgorithm.Decryption(CaesarAlgorithm.Key(key)).apply(file)
         assertTrue(Files.exists(file.toPath().resolveSibling("${file.nameWithoutExtension}_decrypted.${file.extension}")))
     }
 
@@ -62,7 +59,7 @@ internal class CaesarAlgorithmTest {
         CaesarAlgorithm.Encryption().apply(file)
         val encryptedFile = folderPath.resolve("algorithm.test.encrypted").toFile()
         val key = systemIOMock.consumeOutput().replace(Regex("[\\n\\r.]*KEY: (-?\\d+)[\\n\\r.]*"), "$1").toByte()
-        CaesarAlgorithm.Decryption(ByteKey(key)).apply(encryptedFile)
+        CaesarAlgorithm.Decryption(CaesarAlgorithm.Key(key)).apply(encryptedFile)
         val decryptedFile = folderPath.resolve("algorithm_decrypted.test").toFile()
         assertTrue(decryptedFile.readText() == encryptedText)
     }

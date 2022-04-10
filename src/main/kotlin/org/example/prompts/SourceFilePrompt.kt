@@ -2,10 +2,10 @@ package org.example.prompts
 
 import org.example.algorithm.AlgorithmMethod
 import java.io.File
-import java.lang.Exception
 
-class SourceFilePrompt(algorithm: AlgorithmMethod<*>? = null) : RepeatedInputPrompt<File>(
-    "Enter the path of the source file: ",
+class SourceFilePrompt(algorithm: AlgorithmMethod<*>? = null, message: String = "Enter the path of the source file: ")
+    : RepeatedInputPrompt<File>(
+    message,
     BadSourceFile(),
     convert = fun (s): File {
         val file = File(s)
