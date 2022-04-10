@@ -3,20 +3,6 @@ package org.example.algorithm
 import java.io.File
 import java.io.FileOutputStream
 import java.io.ObjectOutputStream
-import java.io.Serializable
-
-abstract class AlgorithmKey(val name: String): Serializable {
-    class Illegal : java.lang.Exception("Key is invalid.")
-    abstract fun encryption(): EncryptionMethod<out AlgorithmKey>
-    abstract fun decryption(): DecryptionMethod<out AlgorithmKey>
-}
-
-abstract class ByteKey(
-    val byte: Byte,
-    name: String
-) : AlgorithmKey(
-    name
-)
 
 abstract class AlgorithmMethod<K: AlgorithmKey>(var key: K) : AlgorithmObservable() {
     abstract fun apply(index: Int, byte: Byte): Byte
