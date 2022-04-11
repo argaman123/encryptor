@@ -1,7 +1,7 @@
 package org.example.algorithm
 
 import org.example.algorithm.caesar.CaesarPrompt
-import org.example.algorithm.double.DoublePrompt
+import org.example.algorithm.doubleAlg.DoublePrompt
 import org.example.algorithm.multiplication.MultiplicationPrompt
 import org.example.algorithm.reverse.ReversePrompt
 import org.example.algorithm.split.SplitPrompt

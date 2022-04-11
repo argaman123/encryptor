@@ -1,7 +1,6 @@
 package org.example.algorithm.split
 
 import org.example.algorithm.*
-import org.example.algorithm.split.SplitAlgorithm.*
 
 
 class SplitPrompt : EncryptionSetupPrompt() {
@@ -9,7 +8,7 @@ class SplitPrompt : EncryptionSetupPrompt() {
         val algorithmSetup = AlgorithmMenuPrompt().run()
         val first = algorithmSetup.run()
         val second = algorithmSetup.run()
-        val key = Key(first.key, second.key)
-        return Encryption(key)
+        val key = SplitAlgorithm.Key(first.key, second.key)
+        return SplitAlgorithm.Encryption(key)
     }
 }

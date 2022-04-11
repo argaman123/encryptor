@@ -3,13 +3,13 @@ package org.example.algorithm.split
 import org.example.algorithm.AlgorithmKey
 import org.example.algorithm.DecryptionMethod
 import org.example.algorithm.EncryptionMethod
+import org.example.algorithm.KeyPair
 
 class SplitAlgorithm {
 
-    class Key(var first: AlgorithmKey, var second: AlgorithmKey) : AlgorithmKey(name = "Split") {
+    class Key(first: AlgorithmKey, second: AlgorithmKey) : KeyPair(first, second, "Split") {
         override fun encryption() = Encryption(this)
         override fun decryption() = Decryption(this)
-        override fun toString() = "$first, $second"
     }
 
     class Encryption(k: Key) : EncryptionMethod<Key>(k) {

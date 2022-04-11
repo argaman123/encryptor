@@ -9,6 +9,33 @@ import java.nio.file.Path
 
 internal class CaesarAlgorithmTest {
 
+    @Test
+    fun encryptionApply(){
+        val encryption = CaesarAlgorithm.Encryption()
+        assertEquals(encryption.apply(0, 0), encryption.key.byte)
+    }
+
+    @Test
+    fun encryptionApplyOverflow(){
+        val encryption = CaesarAlgorithm.Encryption(CaesarAlgorithm.Key(1))
+        assertEquals(encryption.apply(0, Byte.MAX_VALUE), Byte.MIN_VALUE)
+    }
+
+    @Test
+    fun decryptionApply(){
+        val decryption = CaesarAlgorithm.Decryption(CaesarAlgorithm.Key(1))
+        assertEquals(decryption.apply(0, 0), (-decryption.key.byte).toByte())
+    }
+
+    @Test
+    fun decryptionApplyOverflow(){
+        val decryption = CaesarAlgorithm.Decryption(CaesarAlgorithm.Key(1))
+        assertEquals(decryption.apply(0, Byte.MIN_VALUE), Byte.MAX_VALUE)
+    }
+
+}
+/*
+
     companion object {
         private var systemIOMock = SystemIOMock()
         @JvmStatic
@@ -64,4 +91,4 @@ internal class CaesarAlgorithmTest {
         assertTrue(decryptedFile.readText() == encryptedText)
     }
 
-}
+ */

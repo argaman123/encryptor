@@ -12,7 +12,7 @@ class MultiplicationAlgorithm {
             if(!validate(byte)) throw Illegal()
         }
 
-        private companion object {
+        companion object {
             fun validate(key: Byte): Boolean {
                 return key % 2 != 0
             }
@@ -32,7 +32,7 @@ class MultiplicationAlgorithm {
         fun MWOConvert(byte: Byte, key: Byte) :Byte = (byte * key).toByte()
     }
 
-    class Encryption(key: Key = Key(Random.nextBytes(1)[0])) : EncryptionMethod<Key>(key) {
+    class Encryption(key: Key = Key(Key.randomByte())) : EncryptionMethod<Key>(key) {
         override fun apply(index: Int, byte: Byte) = MWOConvert(byte, key.byte)
     }
 

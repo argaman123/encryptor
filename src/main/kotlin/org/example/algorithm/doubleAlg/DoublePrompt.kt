@@ -1,12 +1,11 @@
-package org.example.algorithm.double
+package org.example.algorithm.doubleAlg
 
 import org.example.algorithm.*
-import org.example.algorithm.double.DoubleAlgorithm.*
 
 class DoublePrompt : EncryptionSetupPrompt() {
     override fun run(): EncryptionMethod<out AlgorithmKey> {
         val firstAlgorithm = AlgorithmMenuPrompt().run().run()
         val secondAlgorithm = AlgorithmMenuPrompt().run().run()
-        return Encryption(Key(firstAlgorithm.key, secondAlgorithm.key))
+        return DoubleAlgorithm.Encryption(DoubleAlgorithm.Key(firstAlgorithm.key, secondAlgorithm.key))
     }
 }
