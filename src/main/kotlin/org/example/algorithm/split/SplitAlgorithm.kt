@@ -21,7 +21,6 @@ class SplitAlgorithm {
     }
 
     class Decryption(k: Key) : DecryptionMethod<Key>(k) {
-
         private val firstDecryption = key.first.decryption()
         private val secondDecryption = key.second.decryption()
 

@@ -3,7 +3,7 @@ package org.example.prompts
 import org.example.algorithm.AlgorithmMethod
 import java.io.File
 
-class SourceFilePrompt(algorithm: AlgorithmMethod<*>? = null, message: String = "Enter the path of the source file: ")
+class SourceFilePrompt(algorithm: AlgorithmMethod<*>? = null, message: String = "Enter the path of the file: ")
     : RepeatedInputPrompt<File>(
     message,
     BadSourceFile(),
@@ -15,5 +15,5 @@ class SourceFilePrompt(algorithm: AlgorithmMethod<*>? = null, message: String = 
         return if (file.isFile) file else throw BadSourceFile()
     }
 ) {
-    class BadSourceFile(s: String = "the source file specified doesn't exist.") : Exception(s)
+    class BadSourceFile(s: String = "the file specified doesn't exist.") : Exception(s)
 }

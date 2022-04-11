@@ -1,6 +1,5 @@
 package org.example.algorithm
 
-import org.example.algorithm.double.DoubleAlgorithm
 import java.io.Serializable
 
 abstract class AlgorithmKey(val name: String): Serializable {
