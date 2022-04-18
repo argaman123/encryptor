@@ -54,6 +54,7 @@ internal class MenuPromptTest {
             .stopInput()
         try {
             MenuPrompt(testChoices).run()
+            throw java.lang.AssertionError()
         } catch (e: java.util.NoSuchElementException) {
             assertTrue(systemIOMock.consumeOutput().contains(MenuPrompt.Errors.invalidChoice))
         }
