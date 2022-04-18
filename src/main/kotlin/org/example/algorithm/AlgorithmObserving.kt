@@ -7,7 +7,7 @@ enum class AlgorithmEvent {
     Finished
 }
 
-abstract class AlgorithmObserver : Observer {
+open class AlgorithmObserver : Observer {
     class InvalidNotification :
         java.lang.Exception("AlgorithmObservers must only be notified by AlgorithmObservable and must contain an AlgorithmEvent")
 
